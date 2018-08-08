@@ -13,6 +13,6 @@ Mainly implemented for use as a compile target for my other personal programming
     - Division
     - Modulus
     - Exponents
-- Value printing (ints and floats), so console output is possible
+- Value printing (ints and strings), so console output is possible
 - Jump instruction support coming soon
 - Other more advanced instructions pending
