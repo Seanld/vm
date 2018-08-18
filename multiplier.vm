@@ -1,0 +1,18 @@
+"Welcome to the addition calculator! Enter two numbers, and then they will be added together."
+println
+""
+println
+"#1: "
+print
+read
+cast_int
+"#2: "
+print
+read
+cast_int
+*
+"Added: "
+print
+println
+#2
+jmp
