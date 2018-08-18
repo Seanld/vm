@@ -15,6 +15,7 @@ class Machine:
         self.return_addr_stack = Stack()
         self.instruction_pointer = 0
         self.code = code
+        self.variables = {}
         self.dispatch_map = {
             "%": self.mod,
             "^": self.exp,
@@ -24,6 +25,7 @@ class Machine:
             "/": self.div,
             #"==": self.eq,
             "cast_int": self.cast_int,
+            "cast_float": self.cast_float,
             "cast_str": self.cast_str,
             "concat": self.concat,
             #"drop": self.drop,
@@ -33,7 +35,9 @@ class Machine:
             "over": self.over,
             "print": self.print,
             "println": self.println,
-            "read": self.read
+            "read": self.read,
+            "store": self.store,
+            "load": self.load
             #"stack": self.dump_stack,
             #"swap": self.swap
         }
@@ -48,6 +52,7 @@ class Machine:
     def run(self):
         while self.instruction_pointer < len(self.code):
             opcode = self.code[self.instruction_pointer]
+            #print(opcode)
             self.instruction_pointer += 1
             self.dispatch(opcode)
     
@@ -61,6 +66,8 @@ class Machine:
         else:
             raise RuntimeError("Unknown opcode: '%s'" % op)
     
+    # ARITHMETIc
+
     def plus(self):
         self.push(self.pop() + self.pop())
     def minus(self):
@@ -78,18 +85,23 @@ class Machine:
         last = self.pop()
         self.push(pow(self.pop(), last))
     
+    # IO FUNCTIONALITY
+
     def print(self):
         sys.stdout.write(str(self.pop()))
         sys.stdout.flush()
     def println(self):
+        print(self.data_stack)
         sys.stdout.write("%s\n" % self.pop())
         sys.stdout.flush()
     def read(self):
         self.push(input())
     
+    # CONDITIONALS AND BRANCHING
+
     def jmp(self):
         addr = self.pop()
-        if isinstance(addr, int) and 0 <= addr <= len(code):
+        if isinstance(addr, int) and 0 <= addr <= len(self.code):
             self.instruction_pointer = addr
         else:
             raise RuntimeError("JMP address must be a valid integer.")
@@ -100,13 +112,27 @@ class Machine:
         test = self.pop()
         self.push(true_clause if test else false_clause)
     
+    # TYPE CONVERSIONS
+
     def cast_int(self):
         self.push(int(self.pop()))
+    def cast_float(self)
+        self.push(float(self.pop()))
     def cast_str(self):
         self.push(str(self.pop()))
     def concat(self):
         last = self.pop()
         self.push(self.pop() + last)
+    
+    # DATA STORAGE AND PERSISTENCE
+
+    def store(self):
+        last = self.pop()
+        second = self.pop()
+        print(last, second)
+        self.variables[second] = last
+    def load(self):
+        self.push(self.variables[self.pop()])
     
     def over(self):
         b = self.pop()
