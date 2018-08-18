@@ -1,6 +1,8 @@
-store
 "Sean Wilkerson is a PROgrammer!!!"
-text
+"text"
+store
+"text"
 load
-text
 println
+"text"
+delete
