@@ -37,7 +37,8 @@ class Machine:
             "println": self.println,
             "read": self.read,
             "store": self.store,
-            "load": self.load
+            "load": self.load,
+            "delete": self.delete
             #"stack": self.dump_stack,
             #"swap": self.swap
         }
@@ -91,7 +92,6 @@ class Machine:
         sys.stdout.write(str(self.pop()))
         sys.stdout.flush()
     def println(self):
-        print(self.data_stack)
         sys.stdout.write("%s\n" % self.pop())
         sys.stdout.flush()
     def read(self):
@@ -128,11 +128,11 @@ class Machine:
 
     def store(self):
         last = self.pop()
-        second = self.pop()
-        print(last, second)
-        self.variables[second] = last
+        self.variables[last] = self.pop()
     def load(self):
         self.push(self.variables[self.pop()])
+    def delete(self): # Erases stored data to prevent overflow.
+        del self.variables[self.pop()]
     
     def over(self):
         b = self.pop()
