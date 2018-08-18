@@ -1,4 +1,4 @@
-"Welcome to the addition calculator! Enter two numbers, and then they will be added together."
+"Welcome to the multiplication calculator! Enter two numbers, and then they will be multiplied together."
 println
 ""
 println

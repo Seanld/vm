@@ -23,7 +23,6 @@ class Machine:
             "+": self.plus,
             "-": self.minus,
             "/": self.div,
-            #"==": self.eq,
             "cast_int": self.cast_int,
             "cast_float": self.cast_float,
             "cast_str": self.cast_str,
@@ -32,6 +31,11 @@ class Machine:
             #"dup": self.dup,
             "if": self.if_stmt,
             "jmp": self.jmp,
+            "==": self.eq,
+            ">": self.greater,
+            "<": self.less,
+            ">=": self.greater_eq,
+            "<=" self.less_eq,
             "over": self.over,
             "print": self.print,
             "println": self.println,
@@ -107,10 +111,38 @@ class Machine:
             raise RuntimeError("JMP address must be a valid integer.")
     
     def if_stmt(self):
+        test = self.pop()
         false_clause = self.pop()
         true_clause = self.pop()
-        test = self.pop()
         self.push(true_clause if test else false_clause)
+
+    # COMPARISON OPERATORS
+
+    def eq(self):
+        if self.pop() == self.pop():
+            self.push(True)
+        else:
+            self.push(False)
+    def greater(self):
+        if self.pop() > self.pop():
+            self.push(True)
+        else:
+            self.push(False)
+    def less(self):
+        if self.pop() < self.pop():
+            self.push(True)
+        else:
+            self.push(False)
+    def greater_eq(self):
+        if self.pop() >= self.pop():
+            self.push(True)
+        else:
+            self.push(False)
+    def less_eq(self):
+        if self.pop() <= self.pop():
+            self.push(True)
+        else:
+            self.push(False)
     
     # TYPE CONVERSIONS
 
