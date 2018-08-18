@@ -116,7 +116,7 @@ class Machine:
 
     def cast_int(self):
         self.push(int(self.pop()))
-    def cast_float(self)
+    def cast_float(self):
         self.push(float(self.pop()))
     def cast_str(self):
         self.push(str(self.pop()))
