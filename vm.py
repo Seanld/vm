@@ -35,7 +35,7 @@ class Machine:
             ">": self.greater,
             "<": self.less,
             ">=": self.greater_eq,
-            "<=" self.less_eq,
+            "<=": self.less_eq,
             "over": self.over,
             "print": self.print,
             "println": self.println,
