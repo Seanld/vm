@@ -59,6 +59,7 @@ class Machine:
             opcode = self.code[self.instruction_pointer]
             #print(opcode)
             self.instruction_pointer += 1
+            # print(opcode, self.instruction_pointer)
             self.dispatch(opcode)
     
     def dispatch(self, op):
@@ -69,12 +70,14 @@ class Machine:
         elif isinstance(op, str) and op[0] == op[-1] == '"':
             self.push(op[1:-1])
         else:
-            raise RuntimeError("Unknown opcode: '%s'" % op)
+            # raise RuntimeError("Unknown opcode: '%s'" % op)
+            self.push(op)
     
     # ARITHMETIc
 
     def plus(self):
-        self.push(self.pop() + self.pop())
+        first = self.pop()
+        self.push(self.pop() + first)
     def minus(self):
         last = self.pop()
         self.push(self.pop() - last)
@@ -99,7 +102,7 @@ class Machine:
         sys.stdout.write("%s\n" % self.pop())
         sys.stdout.flush()
     def read(self):
-        self.push(input())
+        self.push(input(self.pop()))
     
     # CONDITIONALS AND BRANCHING
 
@@ -160,7 +163,9 @@ class Machine:
 
     def store(self):
         last = self.pop()
-        self.variables[last] = self.pop()
+        first = self.pop()
+        print(last, first)
+        self.variables[first] = last
     def load(self):
         self.push(self.variables[self.pop()])
     def delete(self): # Erases stored data to prevent overflow.
