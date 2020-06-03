@@ -1,0 +1,9 @@
+name
+"Enter your name: "
+read
+store
+"Welcome to BetterLISP, "
+name
+load
++
+print
