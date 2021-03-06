@@ -111,7 +111,7 @@ class Machine:
         if isinstance(addr, int) and 0 <= addr <= len(self.code):
             self.instruction_pointer = addr
         else:
-            raise RuntimeError("JMP address must be a valid integer.")
+            raise RuntimeError("Jump address must be a valid integer.")
     
     def if_stmt(self):
         test = self.pop()
@@ -164,8 +164,8 @@ class Machine:
     def store(self):
         last = self.pop()
         first = self.pop()
-        print(last, first)
-        self.variables[first] = last
+        # print(last, first)
+        self.variables[last] = first
     def load(self):
         self.push(self.variables[self.pop()])
     def delete(self): # Erases stored data to prevent overflow.
