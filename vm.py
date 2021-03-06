@@ -27,9 +27,9 @@ class Machine:
             "cast_float": self.cast_float,
             "cast_str": self.cast_str,
             "concat": self.concat,
-            #"drop": self.drop,
-            #"dup": self.dup,
-            "if": self.if_stmt,
+            # "drop": self.drop,
+            # "dup": self.dup,
+            "jmp_if": self.jmp_if_stmt,
             "jmp": self.jmp,
             "==": self.eq,
             ">": self.greater,
@@ -42,9 +42,11 @@ class Machine:
             "read": self.read,
             "store": self.store,
             "load": self.load,
-            "delete": self.delete
-            #"stack": self.dump_stack,
-            #"swap": self.swap
+            "delete": self.delete,
+            # "stack": self.dump_stack,
+            # "swap": self.swap,
+            "exit_fail": self.exit_fail,
+            "exit_good": self.exit_good
         }
 
     def pop(self):
@@ -113,11 +115,24 @@ class Machine:
         else:
             raise RuntimeError("Jump address must be a valid integer.")
     
-    def if_stmt(self):
+    def jmp_if_stmt(self):
+        false_jump_address = self.pop()
+        true_jump_address = self.pop()
         test = self.pop()
-        false_clause = self.pop()
-        true_clause = self.pop()
-        self.push(true_clause if test else false_clause)
+
+        print(false_jump_address, true_jump_address, test)
+
+        if type(test).__name__ == 'bool':
+            if test == True:
+                self.instruction_pointer = true_jump_address
+            elif test == False:
+                self.instruction_pointer = false_jump_address
+
+        else:
+            print('ERROR: jump-if condition not boolean')
+
+
+        # self.push(true_clause if test else false_clause)
 
     # COMPARISON OPERATORS
 
@@ -171,9 +186,14 @@ class Machine:
     def delete(self): # Erases stored data to prevent overflow.
         del self.variables[self.pop()]
     
+    def exit_fail(self):
+        exit(1)
+    def exit_good(self):
+        exit(0)
+    
     def over(self):
-        b = self.pop()
         a = self.pop()
-        self.push(a)
+        b = self.pop()
         self.push(b)
         self.push(a)
+        self.push(b)

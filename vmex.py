@@ -4,7 +4,8 @@ import sys
 import vm
 
 opened = open(sys.argv[1], "r")
-LINES = opened.read().splitlines()
+SPLIT_LINES = opened.read().splitlines()
+LINES = list(filter(lambda line: line != '', SPLIT_LINES))
 opened.close()
 
 index_counter = 0

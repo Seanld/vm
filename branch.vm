@@ -1,0 +1,21 @@
+"First string: "
+read
+"firstString"
+store
+"Second string: "
+read
+"secondString"
+store
+"firstString"
+load
+"secondString"
+load
+==
+#20
+#17
+jmp_if
+"They're not equal, failure!"
+println
+exit_fail
+"They're equal, success!"
+println
