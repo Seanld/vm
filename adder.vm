@@ -2,15 +2,13 @@
 println
 ""
 println
-"#1: "
-print
+"First number: "
 read
 cast_int
-"#2: "
-print
+"Second number: "
 read
 cast_int
-*
++
 "Added: "
 print
 println
