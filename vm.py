@@ -59,9 +59,7 @@ class Machine:
     def run(self):
         while self.instruction_pointer < len(self.code):
             opcode = self.code[self.instruction_pointer]
-            #print(opcode)
             self.instruction_pointer += 1
-            # print(opcode, self.instruction_pointer)
             self.dispatch(opcode)
     
     def dispatch(self, op):
@@ -120,19 +118,14 @@ class Machine:
         true_jump_address = self.pop()
         test = self.pop()
 
-        print(false_jump_address, true_jump_address, test)
-
         if type(test).__name__ == 'bool':
             if test == True:
-                self.instruction_pointer = true_jump_address
+                self.instruction_pointer = true_jump_address - 1
             elif test == False:
-                self.instruction_pointer = false_jump_address
+                self.instruction_pointer = false_jump_address - 1
 
         else:
             print('ERROR: jump-if condition not boolean')
-
-
-        # self.push(true_clause if test else false_clause)
 
     # COMPARISON OPERATORS
 
