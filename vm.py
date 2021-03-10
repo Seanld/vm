@@ -109,7 +109,7 @@ class Machine:
     def jmp(self):
         addr = self.pop()
         if isinstance(addr, int) and 0 <= addr <= len(self.code):
-            self.instruction_pointer = addr
+            self.instruction_pointer = addr - 1
         else:
             raise RuntimeError("Jump address must be a valid integer.")
     

@@ -12,5 +12,5 @@ cast_int
 "Added: "
 print
 println
-#2
+#3
 jmp
